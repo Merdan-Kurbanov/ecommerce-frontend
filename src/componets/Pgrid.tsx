@@ -106,7 +106,7 @@ const productData: Product[] = [
 const ProductsSection: React.FC = () => (
   <section
     id="Projects"
-    className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 pb-16"
+    className="w-fit mx-auto lg:pt-40 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 pb-16"
   >
     {productData.map((product) => (
       <Link

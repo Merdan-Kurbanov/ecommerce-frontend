@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductDetails: React.FC = () => {
   return (
-    <section className="text-gray-700 body-font overflow-hidden bg-white dark:bg-primary">
+    <section className="text-gray-700 body-font overflow-hidden bg-white dark:bg-primary h-[100vh]">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap " >
           <img

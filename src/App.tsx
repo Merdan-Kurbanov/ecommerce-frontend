@@ -4,6 +4,8 @@ import { RequireAuth } from "react-auth-kit";
 import ProductDetails from './componets/Productdetail';
 import Navbar from './componets/Navbar';
 import Pgrid from './componets/Pgrid';
+import AdminPage from './componets/Admin';
+import Admin from './componets/Admin';
 
 
 
@@ -29,6 +31,14 @@ function App() {
           element={
             <RequireAuth loginPath="/login">
               <ProductDetails />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth loginPath="/login">
+              <Admin />
             </RequireAuth>
           }
         />
