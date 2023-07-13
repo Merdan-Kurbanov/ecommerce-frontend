@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import Logo from "../shop.png";
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [theme, setTheme] = useState<string>("");
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white border-gray-200 dark:bg-primary">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="" className="flex items-center">
           <img src={Logo} className="h-8 mr-3" alt="Flowbite Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">KOTON</span>
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            KOTON
+          </span>
         </a>
         <div className="flex items-center md:order-2">
           <button
@@ -23,17 +45,25 @@ const Navbar = () => {
             onClick={handleDropdownToggle}
           >
             <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg" alt="user photo" />
+            <img
+              className="w-8 h-8 rounded-full"
+              src="https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+              alt="user photo"
+            />
           </button>
           {/* Dropdown menu */}
           {isDropdownOpen && (
             <div
-              className="absolute top-10 right-80 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+              className="absolute top-10 right-80 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-primary "
               id="user-dropdown"
             >
               <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">Merdan K</span>
-                <span className="block text-sm text-gray-500 truncate dark:text-gray-400">name@blabla.com</span>
+                <span className="block text-sm text-gray-900 dark:text-white">
+                  Merdan K
+                </span>
+                <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
+                  name@blabla.com
+                </span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
@@ -52,7 +82,7 @@ const Navbar = () => {
                     Settings
                   </a>
                 </li>
-                
+
                 <li>
                   <a
                     href="#"
@@ -64,6 +94,7 @@ const Navbar = () => {
               </ul>
             </div>
           )}
+
           <button
             data-collapse-toggle="navbar-user"
             type="button"
@@ -80,12 +111,34 @@ const Navbar = () => {
               fill="none"
               viewBox="0 0 17 14"
             >
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <button onClick={handleThemeSwitch} className=" w-5 ml-4">
+            <svg
+              className="dark:fill-[#ffce45] stroke-[#ffce45]"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
             </svg>
           </button>
         </div>
-        <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <div
+          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          id="navbar-user"
+        >
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-primary dark:border-gray-700">
             <li>
               <a
                 href="#"
@@ -103,8 +156,7 @@ const Navbar = () => {
                 About
               </a>
             </li>
-            
-            
+
             <li>
               <a
                 href="#"

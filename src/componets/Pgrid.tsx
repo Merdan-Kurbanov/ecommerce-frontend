@@ -106,13 +106,13 @@ const productData: Product[] = [
 const ProductsSection: React.FC = () => (
   <section
     id="Projects"
-    className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
+    className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 pb-16"
   >
     {productData.map((product) => (
       <Link
         to={`/productDetail/${product.id}`}
         key={product.id}
-        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+        className="w-72 bg-white dark:bg-secondary shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
       >
         <a href="#">
           <img
@@ -124,15 +124,15 @@ const ProductsSection: React.FC = () => (
             <span className="text-gray-400 mr-3 uppercase text-xs">
               {product.brand}
             </span>
-            <p className="text-lg font-bold text-black truncate block capitalize">
+            <p className="text-lg font-bold text-black dark:text-white truncate block capitalize">
               {product.productName}
             </p>
             <div className="flex items-center">
-              <p className="text-lg font-semibold text-black cursor-auto my-3">
+              <p className="text-lg font-semibold text-black dark:text-white cursor-auto my-3">
                 ${product.price}
               </p>
               <del>
-                <p className="text-sm text-gray-600 cursor-auto ml-2">
+                <p className="text-sm text-gray-600 dark:text-white cursor-auto ml-2">
                   ${product.discountPrice}
                 </p>
               </del>
@@ -142,7 +142,7 @@ const ProductsSection: React.FC = () => (
                   width="20"
                   height="20"
                   fill="currentColor"
-                  className="bi bi-bag-plus"
+                  className="bi bi-bag-plus fill-black dark:fill-white"
                   viewBox="0 0 16 16"
                 >
                   <path
