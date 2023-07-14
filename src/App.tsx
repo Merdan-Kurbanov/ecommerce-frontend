@@ -1,6 +1,6 @@
 import Login from './componets/Login'
-import { Route, Routes,useLocation } from "react-router-dom";
-import { RequireAuth } from "react-auth-kit";
+import { Navigate, Route, Routes,useLocation } from "react-router-dom";
+import { RequireAuth ,useAuthUser} from "react-auth-kit";
 import ProductDetails from './componets/Productdetail';
 import Navbar from './componets/Navbar';
 import Pgrid from './componets/Pgrid';
@@ -13,12 +13,17 @@ import ProductForm from './componets/ProductForm';
 function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
-
+  const auth = useAuthUser();
+  {console.log(auth)}
 
   return (
     <div className='w-[100%] h-[100%] bg-white dark:bg-primary'>
       {!isLoginPage && <Navbar />}
       <Routes>
+        <Route
+          path="/"
+          element={!auth ? <Navigate to="/login" /> : <Navigate to="/allProducts" />}
+        />
         <Route
           path="/allProducts"
           element={
