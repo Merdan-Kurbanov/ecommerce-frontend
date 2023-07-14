@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Logo from "../shop.png";
+import { Link } from "react-router-dom";
+import { useSignOut } from "react-auth-kit";
+
+
+
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [theme, setTheme] = useState<string>("");
+  const signOut = useSignOut()
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setTheme("dark");
@@ -36,10 +42,10 @@ const Navbar = () => {
             KOTON
           </span>
         </a>
-        <div className="flex items-center md:order-2">
+        <div className="flex items-center md:order-2 relative">
           <button
             type="button"
-            className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="hidden md:flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
             id="user-menu-button"
             aria-expanded="false"
             onClick={handleDropdownToggle}
@@ -54,7 +60,7 @@ const Navbar = () => {
           {/* Dropdown menu */}
           {isDropdownOpen && (
             <div
-              className="absolute top-10 right-80 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-primary "
+              className="absolute top-6 right-10  z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-secondary "
               id="user-dropdown"
             >
               <div className="px-4 py-3">
@@ -67,29 +73,29 @@ const Navbar = () => {
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  <Link
+                    to={"/admin"}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-primary dark:text-gray-200 dark:hover:text-white"
                   >
                     Admin
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-primary dark:text-gray-200 dark:hover:text-white"
                   >
                     Settings
                   </a>
                 </li>
 
                 <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  <button
+                    onClick={() => signOut()}
+                    className="w-full left-0 px-4 text-left py-2   text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-primary dark:text-gray-200 dark:hover:text-white"
                   >
                     Sign out
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -135,7 +141,7 @@ const Navbar = () => {
           </button>
         </div>
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 right-5"
           id="navbar-user"
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-primary dark:border-gray-700">

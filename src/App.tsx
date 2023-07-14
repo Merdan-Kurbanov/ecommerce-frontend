@@ -6,6 +6,7 @@ import Navbar from './componets/Navbar';
 import Pgrid from './componets/Pgrid';
 import AdminPage from './componets/Admin';
 import Admin from './componets/Admin';
+import ProductForm from './componets/ProductForm';
 
 
 
@@ -39,6 +40,14 @@ function App() {
           element={
             <RequireAuth loginPath="/login">
               <Admin />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/productedit"
+          element={
+            <RequireAuth loginPath="/login">
+              <ProductForm />
             </RequireAuth>
           }
         />

@@ -63,7 +63,7 @@ const Login: React.FC = () => {
 
  
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-96">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-96 h-[100vh]">
       <a
         href="#"
         className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-black"

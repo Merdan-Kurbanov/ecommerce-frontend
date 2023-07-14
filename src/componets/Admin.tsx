@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Product {
   id: string;
@@ -67,7 +68,7 @@ const AdminPage = () => {
   return (
     <section className="bg-transparent py-12 h-[100vh] max-w-6xl mx-auto">
       <div className="container mx-auto px-4 py-10">
-        <div className="p-4 bg-transparent ">
+        <div className="p-4 bg-transparent pt-10">
           <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-white">Products</h1>
           <ul className='space-y-6'>
             {products.map((product) => (
@@ -90,12 +91,13 @@ const AdminPage = () => {
                   </div>
                 </div>
                 <div>
-                  <button
+                  <Link
+                    to={"/admin/productedit"}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
                     onClick={() => handleEdit(product.id)}
                   >
                     Edit
-                  </button>
+                  </Link>
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
                     onClick={() => handleDelete(product.id)}
