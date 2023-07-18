@@ -4,9 +4,8 @@ import { RequireAuth ,useAuthUser} from "react-auth-kit";
 import ProductDetails from './componets/Productdetail';
 import Navbar from './componets/Navbar';
 import Pgrid from './componets/Pgrid';
-import AdminPage from './componets/Admin';
 import Admin from './componets/Admin';
-import ProductForm from './componets/ProductForm';
+import ProductForm from './componets/ProductEdit';
 
 
 
@@ -17,12 +16,12 @@ function App() {
   {console.log(auth)}
 
   return (
-    <div className='w-[100%] h-[100%] bg-white dark:bg-primary'>
+    <div className='w-[100%] h-screen overflow-auto bg-white dark:bg-primary'>
       {!isLoginPage && <Navbar />}
       <Routes>
         <Route
           path="/"
-          element={!auth ? <Navigate to="/login" /> : <Navigate to="/allProducts" />}
+          element={!auth ? <Navigate to="/login" /> : <Navigate to="/allProducts"/>}
         />
         <Route
           path="/allProducts"

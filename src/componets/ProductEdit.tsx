@@ -129,7 +129,8 @@ const ProductForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto h-[100vh] pt-40">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto  h-full flex flex-col justify-center">
+      <div className='p-5'>
         <h1 className='dark:text-white text-black text-2xl my-5 font-semibold'>Product Edit</h1>
       <div className="mb-4 ">
         <label htmlFor="name" className="block text-gray-700 dark:text-gray-400 font-semibold mb-2">
@@ -205,6 +206,7 @@ const ProductForm: React.FC = () => {
       >
         Submit
       </button>
+      </div>
     </form>
   );
 };

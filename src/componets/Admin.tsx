@@ -66,13 +66,13 @@ const AdminPage = () => {
   };
 
   return (
-    <section className="bg-transparent py-12 h-[100vh] max-w-6xl mx-auto">
-      <div className="container mx-auto px-4 py-10">
-        <div className="p-4 bg-transparent pt-10">
+    <section className="bg-transparent py-12 max-w-6xl mx-auto ">
+      <div className="container mx-auto px-4 py-10 ">
+        <div className="p-4 bg-transparent pt-10 ">
           <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-white">Products</h1>
-          <ul className='space-y-6'>
+          <ul className='space-y-6 '>
             {products.map((product) => (
-              <li key={product.id} className="flex justify-between items-center mb-2 bg-gray-50 dark:bg-secondary p-4 rounded-lg shadow-sm">
+              <li key={product.id} className="flex justify-between items-center mb-2 bg-gray-100 dark:bg-secondary p-4 rounded-lg shadow-lg">
                 <div className="flex items-center">
                   <img src={product.image} alt={product.name} className="w-16 h-16 rounded-md mr-4" />
                   <div>
