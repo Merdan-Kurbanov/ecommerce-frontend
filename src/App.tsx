@@ -23,7 +23,7 @@ function App() {
           element={!auth ? <Navigate to="/login" /> : <Navigate to="/allProducts"/>}
         />
         <Route
-          path="/allProducts"
+          path="/products"
           element={
             <RequireAuth loginPath="/login">
               <Pgrid />
@@ -31,7 +31,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/productDetail/:id"
+          path="/products/:id"
           element={
             <RequireAuth loginPath="/login">
               <ProductDetails />

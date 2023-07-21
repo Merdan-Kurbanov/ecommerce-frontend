@@ -44,7 +44,7 @@ const Login: React.FC = () => {
         };
         
         signIn(signInData);
-        Navigate("/allProducts");
+        Navigate("/products");
       })
       .catch((err) => {
         if (err && err instanceof AxiosError) {

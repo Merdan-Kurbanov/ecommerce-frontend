@@ -55,7 +55,7 @@ const AdminPage = () => {
   const [products, setProducts] = useState(initialProducts);
 
   const handleEdit = (id: string) => {
-    // Implement your edit logic here
+  
     console.log(`Editing product with id ${id}`);
   };
 

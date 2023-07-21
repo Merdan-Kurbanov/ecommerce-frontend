@@ -17,12 +17,8 @@ const ProductsSection: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const authtoken = Cookies.get("_auth") as string;
 
-  // Set the default Authorization header for all axios requests
-  //axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
   const fetchProducts = async () => {
     try {
-      // Make the GET request to the API endpoint with the token in headers
       const response = await axios.get<Product[]>(
         "https://localhost:7137/api/product",
         {
@@ -49,7 +45,7 @@ const ProductsSection: React.FC = () => {
     >
       {products.map((product) => (
         <Link
-          to={`/productDetail/${product.id}`}
+          to={`/products/${product.id}`}
           key={product.id}
           className="w-72 bg-white dark:bg-secondary shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
         >
