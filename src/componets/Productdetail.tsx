@@ -1,6 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from "js-cookie";
+
+interface Product {
+  id: number;
+  imageUrl: string;
+  brand: string;
+  name: string;
+  description: string;
+  price: number;
+  discountPrice: number;
+}
 
 const ProductDetails: React.FC = () => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const authtoken = Cookies.get("_auth") as string;
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get<Product>(`https://localhost:7137/api/product/${id}`,{
+          headers: {
+            Authorization: `Bearer ${authtoken}`,
+          },
+        });
+        setProduct(response.data.data);
+        console.log(response.data.data)
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    void fetchProduct();
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+
+
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white dark:bg-primary h-[100vh] py-5">
       <div className="container px-5 py-24 mx-auto">
@@ -8,14 +49,14 @@ const ProductDetails: React.FC = () => {
           <img
             alt="ecommerce"
             className="lg:w-1/2 h-[70vh] w-full  object-center object-cover rounded  shadow-md"
-            src="https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+            src={product.imageUrl}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 dark:text-gray-300 tracking-widest">
-              BRAND NAME
+              {product.brand}
             </h2>
             <h1 className="dark:text-white text-gray-900 text-3xl title-font font-medium mb-1">
-              The Catcher in the Rye
+              {product.name}
             </h1>
             <div className="flex mb-4">
               <span className="flex items-center">
@@ -116,12 +157,7 @@ const ProductDetails: React.FC = () => {
               </span>
             </div>
             <p className="leading-relaxed dark:text-white text-black">
-              Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-              sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo
-              juiceramps cornhole raw denim forage brooklyn. Everyday carry +1
-              seitan poutine tumeric. Gastropub blue bottle austin listicle
-              pour-over, neutra jean shorts keytar banjo tattooed umami
-              cardigan.
+              {product.description}
             </p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
               <div className="flex">
@@ -157,7 +193,7 @@ const ProductDetails: React.FC = () => {
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900 dark:text-white">
-                $58.00
+                ${product.price}
               </span>
               <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                 Button

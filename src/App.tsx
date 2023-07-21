@@ -13,7 +13,6 @@ function App() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
   const auth = useAuthUser();
-  {console.log(auth)}
 
   return (
     <div className='w-[100%] h-screen overflow-auto bg-white dark:bg-primary'>

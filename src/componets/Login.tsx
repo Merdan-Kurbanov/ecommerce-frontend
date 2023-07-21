@@ -6,8 +6,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 
 interface LoginForm {
-  username: string;
-  password: string;
+  email: string;
+  passwordHash: string;
 }
 
 interface SignInData {
@@ -20,35 +20,31 @@ interface SignInData {
 const Login: React.FC = () => {
   const [error, setError] = useState<string>("");
   const signIn = useSignIn();
-  const Navigate=useNavigate();
+  const Navigate = useNavigate();
 
-  const OnSubmitHandle = (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const OnSubmitHandle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
-  
     const form = event.target as HTMLFormElement;
     const emailInput = form.email as HTMLInputElement;
     const passwordInput = form.password as HTMLInputElement;
-  
+    
     const values: LoginForm = {
-      username: "kminchelle",
-      password: "0lelplR",
+      email: emailInput.value,
+      passwordHash: passwordInput.value,
     };
-  
     axios
-      .post("https://dummyjson.com/auth/login", values)
+      .post("https://localhost:7137/api/Auth/SignIn", values)
       .then((response: AxiosResponse<{ token: string }>) => {
         const signInData: SignInData = {
-          token: response.data.token,
+          token: response.data.data,
           expiresIn: 3600,
           tokenType: "Bearer",
-          authState: { email: values.username },
+          authState: { email: values.email },
         };
-  
+        
         signIn(signInData);
-        Navigate("/allProducts")
+        Navigate("/allProducts");
       })
       .catch((err) => {
         if (err && err instanceof AxiosError) {
@@ -56,12 +52,11 @@ const Login: React.FC = () => {
         } else if (err && err instanceof Error) {
           setError(err.message);
         }
-  
+
         console.log("Error: ", err);
       });
   };
 
- 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 w-96 h-[100vh]">
       <a
@@ -92,7 +87,7 @@ const Login: React.FC = () => {
                 onChange={(e) => {
                   e.target.value;
                 }}
-                type="email"
+                type="text"
                 name="email"
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
