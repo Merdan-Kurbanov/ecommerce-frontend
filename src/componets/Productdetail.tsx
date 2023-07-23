@@ -27,7 +27,6 @@ const ProductDetails: React.FC = () => {
           },
         });
         setProduct(response.data.data);
-        console.log(response.data.data)
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -39,8 +38,6 @@ const ProductDetails: React.FC = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-
-
 
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white dark:bg-primary h-[100vh] py-5">

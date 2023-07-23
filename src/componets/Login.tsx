@@ -5,6 +5,8 @@ import { useSignIn } from "react-auth-kit";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 
+
+
 interface LoginForm {
   email: string;
   passwordHash: string;
@@ -17,11 +19,12 @@ interface SignInData {
   authState: { email: string };
 }
 
+
 const Login: React.FC = () => {
   const [error, setError] = useState<string>("");
   const signIn = useSignIn();
   const Navigate = useNavigate();
-
+  
   const OnSubmitHandle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
@@ -37,12 +40,11 @@ const Login: React.FC = () => {
       .post("https://localhost:7137/api/Auth/SignIn", values)
       .then((response: AxiosResponse<{ token: string }>) => {
         const signInData: SignInData = {
-          token: response.data.data,
+          token: response.data.data.token,
           expiresIn: 3600,
           tokenType: "Bearer",
           authState: { email: values.email },
         };
-        
         signIn(signInData);
 
         setTimeout(() => {
