@@ -1,68 +1,64 @@
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 interface Product {
-  id: string;
-  name: string;
-  image: string;
+  id: number;
+  imageUrl: string;
+  brand: string;
+  productName: string;
   description: string;
   price: number;
-  discountPrice?: number;
+  discountPrice: number;
 }
 
-const initialProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Product 1',
-    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2xvdGhlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO',
-    price: 10,
-    discountPrice: 8,
-  },
-  {
-    id: '2',
-    name: 'Product 2',
-    image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO',
-    price: 20,
-  },
-  {
-    id: '1',
-    name: 'Product 1',
-    image: 'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2xvdGhlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO',
-    price: 10,
-    discountPrice: 8,
-  },
-  {
-    id: '2',
-    name: 'Product 2',
-    image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNsb3RoZXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO',
-    price: 20,
-  },
-  {
-    id: '3',
-    name: 'Product 3',
-    image: 'https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2xvdGhlc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60',
-    description: 'Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO',
-    price: 30,
-    discountPrice: 25,
-  },
-];
 
 const AdminPage = () => {
-  const [products, setProducts] = useState(initialProducts);
+  const [products, setProducts] = useState<Product[]>([]);
+  const authtoken = Cookies.get("_auth") as string;
 
-  const handleEdit = (id: string) => {
-  
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get<Product[]>(
+        "https://localhost:7137/api/product",
+        {
+          headers: {
+            Authorization: `Bearer ${authtoken}`,
+          },
+        }
+      );
+
+      setProducts(response.data.data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    void fetchProducts();
+  }, []);
+
+  const handleEdit = (id: number) => {
     console.log(`Editing product with id ${id}`);
   };
 
-  const handleDelete = (id: string) => {
-    // Implement your delete logic here
-    console.log(`Deleting product with id ${id}`);
-    setProducts(products.filter((product) => product.id !== id));
+ 
+
+  const handleDelete = (id: number): void => {
+    axios
+      .delete(`https://localhost:7137/api/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authtoken}`,
+        },
+      })
+      .then((response) => {
+        console.log(`Product with id ${id} deleted successfully`);
+        setProducts(products.filter((product) => product.id !== id));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -74,9 +70,9 @@ const AdminPage = () => {
             {products.map((product) => (
               <li key={product.id} className="flex justify-between items-center mb-2 bg-gray-100 dark:bg-secondary p-4 rounded-lg shadow-lg">
                 <div className="flex items-center">
-                  <img src={product.image} alt={product.name} className="w-16 h-16 rounded-md mr-4" />
+                  <img src={product.imageUrl} alt={product.productName} className="w-16 h-16 rounded-md mr-4" />
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-800 dark:text-white">{product.name}</h2>
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-white">{product.productName}</h2>
                     <p className="text-sm text-gray-600 dark:text-white">{product.description}</p>
                     <div className="mt-2">
                       {product.discountPrice ? (
@@ -100,6 +96,7 @@ const AdminPage = () => {
                   </Link>
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                    
                     onClick={() => handleDelete(product.id)}
                   >
                     Delete
