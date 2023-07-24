@@ -58,7 +58,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/productedit"
+          path="/admin/productedit/:id"
           element={
             <RequireAuth loginPath="/login">
               <RoleProtectedRoute
@@ -68,7 +68,6 @@ function App() {
             </RequireAuth>
           }
         />
-        
         <Route path="/unauthorized" element={<Unauthorized />}></Route>
         <Route path="/login" element={<Login />}></Route>
       </Routes>

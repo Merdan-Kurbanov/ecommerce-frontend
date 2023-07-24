@@ -88,7 +88,7 @@ const AdminPage = () => {
                 </div>
                 <div>
                   <Link
-                    to={"/admin/productedit"}
+                    to={`/admin/productedit/${product.id}`}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2"
                     onClick={() => handleEdit(product.id)}
                   >
